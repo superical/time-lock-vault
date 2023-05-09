@@ -1,9 +1,9 @@
 # Time-Lock Vault Contracts [![Hardhat][hardhat-badge]][hardhat] [![License: GNU AGPLv3][license-badge]][license]
 
-[gitpod]: https://gitpod.io/#https://github.com/paulrberg/hardhat-template
-[gitpod-badge]: https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-FFB45B?logo=gitpod
-[gha]: https://github.com/paulrberg/hardhat-template/actions
-[gha-badge]: https://github.com/paulrberg/hardhat-template/actions/workflows/ci.yml/badge.svg
+<div align="center">
+<img src="docs/images/header.png" alt="Time-Lock Vault Solidity Contracts" />
+</div>
+
 [hardhat]: https://hardhat.org/
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
 [license]: https://opensource.org/license/agpl-v3/
