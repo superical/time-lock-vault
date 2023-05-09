@@ -6,6 +6,10 @@
     "name": "superical",
     "url": "https://github.com/superical"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/superical/time-lock-vault.git"
+  },
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
     "@chainlink/contracts": "^0.6.1",
