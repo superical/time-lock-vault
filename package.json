@@ -12,7 +12,6 @@
   },
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
-    "@chainlink/contracts": "^0.6.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
