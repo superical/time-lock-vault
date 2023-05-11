@@ -22,7 +22,44 @@ time-lock vault functionality such as `deposit`, `withdraw` and `batchWithdraw`.
 ## Custom Vaults
 
 Alternatively, you can create your own Solidity vault contract by extending the `TimeLockVault`
-abstract contract and implementing your desired logic. Your contract can inherit additional
-functionalities such as premature withdrawal (refer to the `_prematureWithdraw` function) before the
-maturity date subject your specific condition, control over the depositor/recipient addresses, and
-other aspects.
+abstract contract and implementing your desired logic.
+
+### Installation
+
+```bash
+npm install @superical/time-lock-vault --save-dev
+```
+
+### Usage
+
+Note that the `TimeLockVault` is an upgradeable contract. If you don't plan on upgrading your vault
+contract, you should initialise it in your constructor.
+
+```solidity
+import "@superical/time-lock-vault/contracts/TimeLockVault.sol";
+
+contract MyCustomVault is TimeLockVault {
+  constructor(string memory _name, string memory _symbol, address _asset) initializer {
+    // Initialize the TimeLockVault contract
+    __TimeLockVault_init(_name, _symbol, _asset);
+  }
+
+  // Implement custom deposit logic
+  function deposit(uint256 amount) external {
+    // Custom deposit condition here...
+    // Deposit from the sender to himself and to be locked for 1 day
+    _deposit(_msgSender(), _msgSender(), amount, 86400);
+  }
+
+  // Implement custom withdraw logic
+  function withdraw(uint256 depositId) external {
+    // Custom withdrawal condition here...
+    // Withdraw deposit ID to sender
+    _withdraw(depositId);
+  }
+}
+```
+
+Your contract will inherit additional functionalities such as premature withdrawal (refer to the
+`_prematureWithdraw` function) before the maturity date subject your specific condition, control
+over the depositor/recipient addresses, and other aspects.
