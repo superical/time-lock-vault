@@ -1,13 +1,20 @@
-# Time-Lock Vault Contracts [![Hardhat][hardhat-badge]][hardhat] [![License: GNU AGPLv3][license-badge]][license]
+# Time-Lock Vault Contracts
 
-<div align="center">
-<img src="docs/images/header.png" alt="Time-Lock Vault Solidity Contracts" />
-</div>
+[![Release][gha-badge]][gha-ci] [![solidity][solidity-badge]][solidity]
+[![Hardhat][hardhat-badge]][hardhat] [![License: GNU AGPLv3][license-badge]][license]
 
 [hardhat]: https://hardhat.org/
 [hardhat-badge]: https://img.shields.io/badge/Built%20with-Hardhat-FFDB1C.svg
 [license]: https://opensource.org/license/agpl-v3/
 [license-badge]: https://img.shields.io/badge/License-AGPL_v3-blue.svg
+[solidity]: https://github.com/superical/time-lock-vault
+[solidity-badge]: https://img.shields.io/badge/solidity-v0.8.13-2ea44f?logo=solidity
+[gha-ci]: https://github.com/superical/time-lock-vault/actions/workflows/release.yml
+[gha-badge]: https://github.com/superical/time-lock-vault/actions/workflows/release.yml/badge.svg
+
+<div align="center">
+<img src="docs/images/header.png" alt="Time-Lock Vault Solidity Contracts" />
+</div>
 
 A simple and easy to use time-lock vault for ERC20 tokens, designed to support multiple deposits and
 withdrawals by various users. Each deposit can have a predefined/fixed locking period or a different
