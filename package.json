@@ -73,7 +73,8 @@
     "errors",
     "vault",
     "time-lock",
-    "time-lock-vault"
+    "time-lock-vault",
+    "timelock"
   ],
   "publishConfig": {
     "access": "public"
