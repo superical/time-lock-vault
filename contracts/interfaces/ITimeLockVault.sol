@@ -25,7 +25,7 @@ interface ITimeLockVault is IERC20MetadataUpgradeable {
     function previewWithdraw(
         address recipient,
         uint256[] calldata depositIds
-    ) external view returns (uint256);
+    ) external view returns (uint256 totalAmount, bool[] memory depositIdsIncluded);
 
     function totalActiveDepositsOf(address recipient) external view returns (uint256);
 

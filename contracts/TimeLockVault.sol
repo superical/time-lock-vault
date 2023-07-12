@@ -165,12 +165,14 @@ abstract contract TimeLockVault is ERC20Upgradeable, ITimeLockVault, TimeLockVau
 
     /**
      * @notice Preview the amount of asset that can be redeemed from the payment IDs
+     * @dev Returns the total amount and an array of boolean indicating whether the specified deposit ID is included in the calculation
      */
     function previewWithdraw(
         address recipient,
         uint256[] calldata depositIds
-    ) external view virtual returns (uint256) {
-        uint256 totalAmount = 0;
+    ) external view virtual returns (uint256 totalAmount, bool[] memory depositIdsIncluded) {
+        totalAmount = 0;
+        depositIdsIncluded = new bool[](depositIds.length);
         for (uint256 i = 0; i < depositIds.length; i++) {
             DepositInfo memory deposit_ = getDeposit(depositIds[i]);
             if (
@@ -178,9 +180,9 @@ abstract contract TimeLockVault is ERC20Upgradeable, ITimeLockVault, TimeLockVau
                 deposit_.redeemTimestamp <= block.timestamp
             ) {
                 totalAmount += deposit_.amount;
+                depositIdsIncluded[i] = true;
             }
         }
-        return totalAmount;
     }
 
     function _deposit(
