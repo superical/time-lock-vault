@@ -26,7 +26,7 @@ represent the amount of their deposited asset.
 The `SimpleTimeLockVault` contract is a ready-to-use vault contract, providing the standard
 time-lock vault functionality such as `deposit`, `withdraw` and `batchWithdraw`.
 
-## Custom Vaults
+## Custom Time-Lock Vaults
 
 Alternatively, you can create your own Solidity vault contract by extending the `TimeLockVault`
 abstract contract and implementing your desired logic.

@@ -184,6 +184,11 @@ describe("Simple Time-Lock Vault", () => {
       let recipient1: SignerWithAddress;
       let recipient2: SignerWithAddress;
 
+      let recipient1Amount: BigNumber;
+      let depositIds1Included: boolean[];
+      let recipient2Amount: BigNumber;
+      let depositIds2Included: boolean[];
+
       const oneDayInterval = 3600 * 24;
 
       beforeEach(async () => {
@@ -213,11 +218,11 @@ describe("Simple Time-Lock Vault", () => {
       describe("Withdrawal Preview", () => {
         describe("When all deposit IDs are not matured yet", () => {
           it("should return zero as the amount", async () => {
-            const recipient1Amount = await simpleVaultContract.previewWithdraw(
+            const [recipient1Amount] = await simpleVaultContract.previewWithdraw(
               recipient1.address,
               [0, 2, 4],
             );
-            const recipient2Amount = await simpleVaultContract.previewWithdraw(
+            const [recipient2Amount] = await simpleVaultContract.previewWithdraw(
               recipient2.address,
               [1, 3],
             );
@@ -228,54 +233,74 @@ describe("Simple Time-Lock Vault", () => {
         });
 
         describe("When some of the deposit IDs are matured", () => {
-          it("should return the total amount of the specified deposit IDs that are matured for withdrawal", async () => {
+          beforeEach(async () => {
             // Deposit ID 4 for recipient 1 should not be matured yet
             await time.increase(oneDayInterval * 6);
 
-            const recipient1Amount = await simpleVaultContract.previewWithdraw(
+            [recipient1Amount, depositIds1Included] = await simpleVaultContract.previewWithdraw(
               recipient1.address,
               [0, 2, 4],
             );
-            const recipient2Amount = await simpleVaultContract.previewWithdraw(
+            [recipient2Amount, depositIds2Included] = await simpleVaultContract.previewWithdraw(
               recipient2.address,
               [1, 3],
             );
+          });
 
+          it("should return the total amount of the specified deposit IDs that are matured for withdrawal", async () => {
             expect(recipient1Amount).to.equal(parseEther("200"));
             expect(recipient2Amount).to.equal(parseEther("200"));
+          });
+
+          it("should return the included result for the specified deposit IDs that are matured for withdrawal", async () => {
+            expect(depositIds1Included).to.deep.equal([true, true, false]);
+            expect(depositIds2Included).to.deep.equal([true, true]);
           });
         });
 
         describe("When some of the deposit IDs are inactive deposits", () => {
-          it("should return only the total amount of the deposit IDs that are active", async () => {
+          beforeEach(async () => {
             await time.increase(oneDayInterval * 6);
             await simpleVaultContract.connect(recipient2).withdraw(1);
 
-            const recipient2Amount = await simpleVaultContract.previewWithdraw(
+            [recipient2Amount, depositIds2Included] = await simpleVaultContract.previewWithdraw(
               recipient2.address,
               [1, 3],
             );
+          });
 
+          it("should return only the total amount of the deposit IDs that are active", async () => {
             expect(recipient2Amount).to.equal(parseEther("100"));
+          });
+
+          it("should return the included result for the specified deposit IDs that are active", async () => {
+            expect(depositIds2Included).to.deep.equal([false, true]);
           });
         });
 
         describe("When all the deposit IDs are matured", () => {
-          it("should return the total amount of the specified deposit IDs", async () => {
+          beforeEach(async () => {
             // 7 days later... All payments matured.
             await time.increase(oneDayInterval * 7);
 
-            const recipient1Amount = await simpleVaultContract.previewWithdraw(
+            [recipient1Amount, depositIds1Included] = await simpleVaultContract.previewWithdraw(
               recipient1.address,
               [0, 2, 4],
             );
-            const recipient2Amount = await simpleVaultContract.previewWithdraw(
+            [recipient2Amount, depositIds2Included] = await simpleVaultContract.previewWithdraw(
               recipient2.address,
               [1, 3],
             );
+          });
 
+          it("should return the total amount of the specified deposit IDs", async () => {
             expect(recipient1Amount).to.equal(parseEther("300"));
             expect(recipient2Amount).to.equal(parseEther("200"));
+          });
+
+          it("should return the included result for the specified deposit IDs of all matured deposits", async () => {
+            expect(depositIds1Included).to.deep.equal([true, true, true]);
+            expect(depositIds2Included).to.deep.equal([true, true]);
           });
         });
 
