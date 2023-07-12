@@ -165,7 +165,8 @@ abstract contract TimeLockVault is ERC20Upgradeable, ITimeLockVault, TimeLockVau
 
     /**
      * @notice Preview the amount of asset that can be redeemed from the payment IDs
-     * @dev Returns the total amount and an array of boolean indicating whether the specified deposit ID is included in the calculation
+     * @dev Returns the total amount and an array of boolean indicating whether the specified deposit ID is included
+     * in the calculation
      */
     function previewWithdraw(
         address recipient,
