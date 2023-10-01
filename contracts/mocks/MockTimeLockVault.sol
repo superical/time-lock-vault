@@ -18,4 +18,8 @@ contract MockTimeLockVault is SimpleTimeLockVault {
     ) public returns (DepositInfo memory) {
         return _prematureWithdraw(from, to, depositId);
     }
+
+    function setAssetInternal(address asset_) public {
+        _setAsset(asset_);
+    }
 }

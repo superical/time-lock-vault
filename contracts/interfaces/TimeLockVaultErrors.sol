@@ -6,6 +6,8 @@ interface TimeLockVaultErrors {
 
     error InvalidActiveDeposit();
 
+    error AssetUndefined();
+
     error DepositNotMatured();
 
     error DepositAlreadyMatured();
