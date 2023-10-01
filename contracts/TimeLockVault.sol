@@ -99,6 +99,19 @@ abstract contract TimeLockVault is ERC20Upgradeable, ITimeLockVault, TimeLockVau
         return _asset.balanceOf(address(this));
     }
 
+    function decimals()
+        public
+        view
+        virtual
+        override(ERC20Upgradeable, IERC20MetadataUpgradeable)
+        returns (uint8)
+    {
+        if (address(_asset) == address(0)) {
+            revert AssetUndefined();
+        }
+        return _asset.decimals();
+    }
+
     function _setAsset(address asset_) internal {
         _asset = IERC20MetadataUpgradeable(asset_);
     }
